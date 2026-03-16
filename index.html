@@ -12,16 +12,30 @@
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      /* Fundo animado com gradiente */
-      background: linear-gradient(-45deg, #1e1e1e, #2c3e50, #00c853, #009624);
-      background-size: 400% 400%;
-      animation: gradientMove 10s ease infinite;
+      background: #121212;
+      overflow: hidden;
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Fundo animado com bolhas */
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(0, 200, 83, 0.4);
+      border-radius: 50%;
+      animation: rise 20s infinite ease-in;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
     }
 
     .player {
@@ -30,7 +44,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       text-align: center;
-      width: 400px;
+      width: 420px;
       transition: all 0.4s ease;
       border: 2px solid transparent;
       animation: borderPulse 4s infinite;
@@ -150,89 +164,7 @@
   </style>
 </head>
 <body>
-  <div class="player">
-    <h2>Minha Rádio Online</h2>
-    <img src="https://xatimg.com/image/3pHiVpiaMAKs.png?text=Artista" alt="Artista" class="artist-photo">
-
-    <div class="song-info">
-      <p id="songName">🎵 Tocando agora: Música Exemplo</p>
-      <p id="dateTime"></p>
-    </div>
-
-    <audio id="radioPlayer">
-      <source src="https://tu-stream-url.com/live.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="controls">
-      <button onclick="playRadio()">▶ Play</button>
-      <button onclick="pauseRadio()">⏸ Pause</button>
-    </div>
-
-    <div class="volume">
-      <label for="vol">Volume</label>
-      <input id="vol" type="range" min="0" max="1" step="0.1" onchange="setVolume(this.value)">
-    </div>
-
-    <div class="stars" id="rating">
-      <span onclick="rateSong(1)">★</span>
-      <span onclick="rateSong(2)">★</span>
-      <span onclick="rateSong(3)">★</span>
-      <span onclick="rateSong(4)">★</span>
-      <span onclick="rateSong(5)">★</span>
-    </div>
-
-    <div class="social-icons">
-      <a href="https://facebook.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-      </a>
-      <a href="https://tiktok.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046122.png" alt="TikTok">
-      </a>
-      <a href="https://instagram.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
-      </a>
-    </div>
-  </div>
-
-  <script>
-    const player = document.getElementById("radioPlayer");
-    const dateTimeEl = document.getElementById("dateTime");
-    const stars = document.querySelectorAll(".stars span");
-
-    function playRadio() {
-      player.play();
-    }
-
-    function pauseRadio() {
-      player.pause();
-    }
-
-    function setVolume(value) {
-      player.volume = value;
-    }
-
-    // Atualizar data e hora em tempo real
-    function updateDateTime() {
-      const now = new Date();
-      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-      const date = now.toLocaleDateString('pt-BR', options);
-      const time = now.toLocaleTimeString('pt-BR');
-      dateTimeEl.textContent = `📅 ${date} 🕒 ${time}`;
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    // Sistema de votação por estrelas
-    function rateSong(rating) {
-      stars.forEach((star, index) => {
-        if (index < rating) {
-          star.classList.add("active");
-        } else {
-          star.classList.remove("active");
-        }
-      });
-      alert(`Você deu ${rating} estrela(s) para esta música!`);
-    }
-  </script>
-</body>
-</html>
+  <!-- Fundo animado -->
+  <div class="background">
+    <div class="bubble" style="left:10%; width:40px; height:40px;"></div>
+    <div class="bubble" style="left:30%; width:25px; height:25px;">
