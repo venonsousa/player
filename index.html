@@ -2,169 +2,113 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Minha Rádio Online</title>
+  <title>Player Personalizado</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       font-family: Arial, sans-serif;
-      background: #121212;
-      overflow: hidden;
-    }
-
-    /* Fundo animado com bolhas */
-    .background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .bubble {
-      position: absolute;
-      bottom: -100px;
-      background: rgba(0, 200, 83, 0.4);
-      border-radius: 50%;
-      animation: rise 20s infinite ease-in;
-    }
-
-    @keyframes rise {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+      background: url('fundo.gif') no-repeat center center fixed;
+      background-size: cover;
     }
 
     .player {
-      background: rgba(0,0,0,0.7);
+      width: 400px;
+      margin: 50px auto;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      text-align: center;
-      width: 420px;
-      transition: all 0.4s ease;
-      border: 2px solid transparent;
-      animation: borderPulse 4s infinite;
-    }
-
-    @keyframes borderPulse {
-      0% { border-color: #00c853; }
-      50% { border-color: #009624; }
-      100% { border-color: #00c853; }
-    }
-
-    .player h2 {
+      background: rgba(0,0,0,0.6);
+      border-radius: 15px;
       color: #fff;
-      margin-bottom: 10px;
+      text-align: center;
     }
 
     .artist-photo {
       width: 300px;
-      height: 200px;
-      border-radius: 12px;
-      object-fit: cover;
-      margin-bottom: 10px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      height: 300px;
+      border-radius: 50%;
+      transition: transform 0.5s ease;
     }
 
     .artist-photo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
-    }
-
-    .song-info {
-      color: #fff;
-      margin: 10px 0;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    .controls button {
-      background: #00c853;
-      border: none;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .controls button:hover {
-      background: #009624;
       transform: scale(1.05);
     }
 
-    .volume {
-      width: 100%;
-      margin-bottom: 15px;
-    }
-
-    .volume label {
-      color: #fff;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .volume input[type="range"] {
-      width: 100%;
-      accent-color: #00c853;
-      transition: accent-color 0.3s ease;
-    }
-
-    .volume input[type="range"]:hover {
-      accent-color: #00e676;
-    }
-
-    .stars {
+    .listeners {
       margin: 15px 0;
+      font-size: 18px;
     }
 
-    .stars span {
-      font-size: 22px;
+    .upload-btn {
+      margin: 10px 0;
+      padding: 10px 20px;
+      background: #3498db;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
       cursor: pointer;
-      color: #555;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .stars span:hover {
-      transform: scale(1.2);
-    }
-
-    .stars span.active {
-      color: gold;
     }
 
     .social-icons {
-      margin-top: 15px;
       display: flex;
       justify-content: center;
       gap: 20px;
-      padding-top: 10px;
-      border-top: 1px solid #333;
+      margin-top: 20px;
     }
 
-    .social-icons a img {
-      width: 35px;
-      height: 35px;
-      transition: transform 0.3s ease;
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
     }
 
-    .social-icons a img:hover {
-      transform: scale(1.2);
+    /* Efeito água nas bordas */
+    .social-icons a::before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,150,255,0.5) 20%, transparent 70%);
+      animation: wave 3s infinite linear;
+    }
+
+    @keyframes wave {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <!-- Fundo animado -->
-  <div class="background">
-    <div class="bubble" style="left:10%; width:40px; height:40px;"></div>
-    <div class="bubble" style="left:30%; width:25px; height:25px;">
+  <div class="player">
+    <img src="artista.jpg" alt="Foto do Artista" class="artist-photo">
+    <div class="listeners">👥 1.234 ouvintes</div>
+
+    <input type="file" id="imageUpload" style="display:none" />
+    <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Gerar Link da Imagem</button>
+    <p id="imageLink"></p>
+
+    <div class="social-icons">
+      <a href="https://facebook.com" target="_blank">F</a>
+      <a href="https://instagram.com" target="_blank">I</a>
+      <a href="https://tiktok.com" target="_blank">T</a>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('imageUpload');
+    const linkDisplay = document.getElementById('imageLink');
+
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if(file){
+        const url = URL.createObjectURL(file);
+        linkDisplay.textContent = "Link gerado: " + url;
+      }
+    });
+  </script>
+</body>
+</html>
