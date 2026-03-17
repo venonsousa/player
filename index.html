@@ -2,18 +2,18 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Player Personalizado</title>
+  <title>Player Rádio Personalizado</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('https://culturainglesamg.com.br/wp-content/uploads/2026/02/BLOG_26-150x150.png') no-repeat center center fixed;
+      background: url('fundo.jpg') no-repeat center center fixed;
       background-size: cover;
       transition: background 2s ease;
     }
 
     .player {
-      width: 400px;
+      width: 420px;
       margin: 50px auto;
       padding: 20px;
       background: rgba(0,0,0,0.6);
@@ -38,21 +38,6 @@
       font-size: 18px;
     }
 
-    .power-btn {
-      margin: 10px 0;
-      padding: 10px 20px;
-      background: #e74c3c;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .power-btn.on {
-      background: #2ecc71;
-    }
-
     .datetime {
       margin-top: 15px;
       font-size: 16px;
@@ -70,15 +55,12 @@
       color: #fff;
       box-shadow: 0 0 20px rgba(0,150,255,0.8);
       animation: glow 2s infinite alternate;
-      position: relative;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 15px;
     }
 
-    /* Texto com brilho correndo */
     .song-text {
       background: linear-gradient(90deg, #fff, #0ff, #fff);
       background-size: 200% auto;
@@ -87,10 +69,50 @@
       animation: shine 4s linear infinite;
     }
 
-    /* Nota musical animada */
-    .note {
-      font-size: 28px;
-      animation: spin 4s linear infinite;
+    /* Disco de vinil animado */
+    .vinyl {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #000 60%, #444 100%);
+      border: 3px solid #fff;
+      position: relative;
+      animation: spin 5s linear infinite;
+    }
+
+    .vinyl::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Controles do player */
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .controls button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #3498db;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 16px;
+    }
+
+    .controls button:hover {
+      background: #2980b9;
     }
 
     @keyframes glow {
@@ -113,33 +135,25 @@
     <img src="artista.jpg" alt="Foto do Artista" class="artist-photo">
     <div class="listeners">👥 1.234 ouvintes</div>
 
-    <button class="power-btn" id="powerBtn">Ligar</button>
-
     <div class="datetime" id="datetime"></div>
 
-    <!-- Quadro estilizado com texto e nota animada -->
+    <!-- Quadro estilizado com disco girando -->
     <div class="song-box">
-      <span class="note">🎵</span>
+      <div class="vinyl"></div>
       <span class="song-text" id="songBox">Tocando agora: Nome da Música</span>
+    </div>
+
+    <!-- Controles do player -->
+    <div class="controls">
+      <button id="prevBtn">⏮️</button>
+      <button id="playBtn">▶️</button>
+      <button id="pauseBtn">⏸️</button>
+      <button id="stopBtn">⏹️</button>
+      <button id="nextBtn">⏭️</button>
     </div>
   </div>
 
   <script>
-    // Botão ligar/desligar
-    const powerBtn = document.getElementById('powerBtn');
-    let ligado = false;
-
-    powerBtn.addEventListener('click', () => {
-      ligado = !ligado;
-      if(ligado){
-        powerBtn.textContent = "Desligar";
-        powerBtn.classList.add("on");
-      } else {
-        powerBtn.textContent = "Ligar";
-        powerBtn.classList.remove("on");
-      }
-    });
-
     // Hora e data em tempo real
     function atualizarDataHora(){
       const agora = new Date();
@@ -156,6 +170,27 @@
     const songBox = document.getElementById('songBox');
     let musicaAtual = "Minha Música Favorita";
     songBox.textContent = "Tocando agora: " + musicaAtual;
+
+    // Controles do player (simulação)
+    document.getElementById('playBtn').addEventListener('click', () => {
+      songBox.textContent = "Tocando agora: " + musicaAtual;
+    });
+
+    document.getElementById('pauseBtn').addEventListener('click', () => {
+      songBox.textContent = "⏸️ Música pausada";
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', () => {
+      songBox.textContent = "⏹️ Música parada";
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      songBox.textContent = "⏮️ Música anterior";
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      songBox.textContent = "⏭️ Próxima música";
+    });
   </script>
 </body>
 </html>
